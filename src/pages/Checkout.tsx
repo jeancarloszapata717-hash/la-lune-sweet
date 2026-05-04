@@ -62,7 +62,9 @@ export default function Checkout() {
     e.preventDefault();
     setAuthError(null);
     try {
+            setIsSubmitting(true);
       if (authMode === 'register') {
+        
         await register(formData as any);
       } else {
         if (!formData.email || !formData.password) {
@@ -74,7 +76,7 @@ export default function Checkout() {
     } catch (error: any) {
       console.error('Auth error:', error);
       setAuthError(error.message);
-    }
+    } finally { setIsSubmitting(false); }
   };
 
   const [paymentMethod, setPaymentMethod] = useState<string>('');
@@ -277,8 +279,9 @@ export default function Checkout() {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   className="w-full mt-4 bg-brand-hotpink text-white rounded-xl py-4 font-bold text-sm tracking-[0.2em] uppercase hover:bg-brand-dark hover:text-brand-cream transition-colors shadow-[0_4px_14px_0_rgba(213,63,140,0.39)]"
+                  disabled={isSubmitting}
                 >
-                  {authMode === 'login' ? 'Entrar y Continuar' : 'Crear Cuenta y Continuar'}
+                  {isSubmitting ? 'Procesando...' : (authMode === 'login' ? 'Entrar y Continuar' : 'Crear Cuenta y Continuar')}
                 </motion.button>
               </form>
             </div>
