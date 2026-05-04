@@ -13,6 +13,8 @@ export interface User {
     role?: 'admin' | 'inventory' | 'support' | 'client';
 }
 
+
+
 interface AuthContextType {
     user: User | null;
     loading: boolean;
@@ -140,7 +142,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
         <AuthContext.Provider value={{ user, loading, login, register, logout }}>
           {children}
-        </AuthContext.Provider>AuthContext.Provider>
+        </AuthContext.Provider>
       );
 }
 
